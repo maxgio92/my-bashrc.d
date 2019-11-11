@@ -111,7 +111,7 @@ bash_prompt() {
     local M="\[\033[0;35m\]"    # magenta
     local C="\[\033[0;36m\]"    # cyan
     local W="\[\033[0;37m\]"    # white
-    local P="\[\e[38;5;99m\]"   # purple
+    local P="\[\033[38;5;99m\]"   # purple
     
     # emphasized (bolded) colors
     local EMK="\[\033[1;30m\]"
@@ -122,7 +122,7 @@ bash_prompt() {
     local EMM="\[\033[1;35m\]"
     local EMC="\[\033[1;36m\]"
     local EMW="\[\033[1;37m\]"
-    local EMP="\[\e[38;5;99m\]\[\e[1m\]"
+    local EMP="\[\033[38;5;99m\]\[\033[1m\]"
     
     # background colors
     local BGK="\[\033[40m\]"
