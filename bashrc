@@ -1,4 +1,9 @@
-# get current branch in git repo
+#-------------------------------------------------------------------------
+# GIT
+#-------------------------------------------------------------------------
+
+# Get current branch in git repo
+
 function parse_git_branch() {
 	BRANCH=`git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`
 	if [ ! "${BRANCH}" == "" ]
@@ -10,7 +15,8 @@ function parse_git_branch() {
 	fi
 }
 
-# get current status of git repo
+# Get current status of git repo
+
 function parse_git_dirty {
 	status=`git status 2>&1 | tee`
 	dirty=`echo -n "${status}" 2> /dev/null | grep "modified:" &> /dev/null; echo "$?"`
@@ -45,15 +51,30 @@ function parse_git_dirty {
 	fi
 }
 
-##################################################
+#-------------------------------------------------------------------------
+# Terraform
+#-------------------------------------------------------------------------
+
+# Get current workspace
+
+function terraform_workspace()
+{
+    if [ -d .terraform ]; then
+        workspace="$(command terraform workspace show 2>/dev/null)"
+        echo " ${workspace}"
+    fi
+}
+
+#-------------------------------------------------------------------------
 # Fancy PWD display function
-##################################################
+#-------------------------------------------------------------------------
+
 # The home directory (HOME) is replaced with a ~
 # The last pwdmaxlen characters of the PWD are displayed
 # Leading partial directory names are striped off
 # /home/me/stuff          -> ~/stuff               if USER=me
 # /usr/share/big_dir_name -> ../share/big_dir_name if pwdmaxlen=20
-##################################################
+
 bash_prompt_command() {
     # How many characters of the $PWD should be kept
     local pwdmaxlen=25
@@ -90,6 +111,7 @@ bash_prompt() {
     local M="\[\033[0;35m\]"    # magenta
     local C="\[\033[0;36m\]"    # cyan
     local W="\[\033[0;37m\]"    # white
+    local P="\[\e[38;5;99m\]"   # purple
     
     # emphasized (bolded) colors
     local EMK="\[\033[1;30m\]"
@@ -100,6 +122,7 @@ bash_prompt() {
     local EMM="\[\033[1;35m\]"
     local EMC="\[\033[1;36m\]"
     local EMW="\[\033[1;37m\]"
+    local EMP="\[\e[38;5;99m\]\[\e[1m\]"
     
     # background colors
     local BGK="\[\033[40m\]"
@@ -114,7 +137,7 @@ bash_prompt() {
     local UC=$EMK               # user's color
     [ $UID -eq "0" ] && UC=$EMR   # root's color
 
-    PS1="$TITLEBAR ${UC}\u${EMK} ${EMB}\${NEW_PWD}${R}\`parse_git_branch\` ${UC}\\$ ${NONE}"
+    PS1="$TITLEBAR ${UC}\u${EMK} ${EMB}\${NEW_PWD}${R}\`parse_git_branch\`${P}\`terraform_workspace\` ${UC}\\$ ${NONE}"
 
     # without colors: PS1="[\u@\h \${NEW_PWD}]\\$ "
     # extra backslash in front of \$ to make bash colorize the prompt
