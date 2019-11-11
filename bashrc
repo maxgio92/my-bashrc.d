@@ -133,6 +133,7 @@ bash_prompt() {
     local BGM="\[\033[45m\]"
     local BGC="\[\033[46m\]"
     local BGW="\[\033[47m\]"
+    local BGP="\[\033[48;5;99m\]"
     
     local UC=$EMK               # user's color
     [ $UID -eq "0" ] && UC=$EMR   # root's color
