@@ -150,6 +150,7 @@ unset bash_prompt
 
 # Aliases
 
-alias ls='ls -G' # Enable colorized output
+#alias ls='ls -G' # Enable colorized output for MacOS
+alias ls='ls --color' # Enable colorized output for Linux
 alias grep='grep --color' # Enable colorized output
 
