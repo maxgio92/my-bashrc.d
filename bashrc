@@ -153,4 +153,10 @@ unset bash_prompt
 #alias ls='ls -G' # Enable colorized output for MacOS
 alias ls='ls --color' # Enable colorized output for Linux
 alias grep='grep --color' # Enable colorized output
+alias pbcopy='xsel --clipboard --input'
+alias pbpaste='xsel --clipboard --output'
+alias k='kubectl'
 
+# Completions
+
+complete -C '/usr/local/bin/aws_completer' aws
